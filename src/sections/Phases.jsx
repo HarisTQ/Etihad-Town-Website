@@ -130,7 +130,7 @@ export default function Phases() {
                   opacity: isOtherHovered ? 0.72 : 1,
                 }}
                 transition={fanCardTransition}
-                className="fan-card glass"
+                className="fan-card"
                 style={{ zIndex: isHovered ? 80 : layout.zIndex }}
                 role="listitem"
                 aria-haspopup="dialog"
