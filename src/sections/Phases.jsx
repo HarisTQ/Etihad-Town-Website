@@ -94,7 +94,7 @@ export default function Phases() {
   };
 
   return (
-    <section id="phases" className="phase-section relative overflow-hidden py-16 md:py-20">
+    <section id="phases" className="phase-section relative py-16 md:py-20">
       <div className="site-container">
         <div className="text-center mb-1 md:mb-2">
           <span className="section-tag">Interactive Phases</span>
