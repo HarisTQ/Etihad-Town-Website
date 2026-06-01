@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import phase1Bg from '../assets/phase1-card.svg';
+import phase2Bg from '../assets/phase2-card.svg';
+import phase3Bg from '../assets/phase3-card.svg';
+import phase4Bg from '../assets/phase4-card.svg';
 
 const cards = [
   {
@@ -7,24 +11,28 @@ const cards = [
     title: 'Etihad Town Phase 1',
     transition: 'Expanding Card Transition',
     description: 'Legacy residential inventory with mature surroundings and direct city connectivity.',
+    backgroundImage: phase1Bg,
   },
   {
     slug: 'phase-2',
     title: 'Etihad Town Phase 2',
     transition: 'Card-to-Page Transition',
     description: 'Balanced development plan with curated amenities and future-facing access routes.',
+    backgroundImage: phase2Bg,
   },
   {
     slug: 'phase-3',
     title: 'Etihad Town Phase 3',
     transition: 'Container Transform Animation',
     description: 'Growth-focused phase designed for rising value and premium neighborhood planning.',
+    backgroundImage: phase3Bg,
   },
   {
     slug: 'phase-4',
     title: 'Etihad Town Phase 4',
     transition: 'Morphing Card Animation',
     description: 'Newest launch with modern planning standards and long-term investment upside.',
+    backgroundImage: phase4Bg,
   },
 ];
 
@@ -130,33 +138,42 @@ export default function Phases() {
                   opacity: isOtherHovered ? 0.72 : 1,
                 }}
                 transition={fanCardTransition}
-                className="fan-card"
-                style={{ zIndex: isHovered ? 80 : layout.zIndex }}
+                className={`fan-card${card.backgroundImage ? ' fan-card--imageOnly' : ''}`}
+                style={{
+                  zIndex: isHovered ? 80 : layout.zIndex,
+                  ...(card.backgroundImage
+                    ? { background: `url(${card.backgroundImage}) center / cover no-repeat` }
+                    : null),
+                }}
                 role="listitem"
                 aria-haspopup="dialog"
                 aria-label={card.title}
               >
-                <motion.span
-                  layout="position"
-                  transition={expandTransition}
-                  className="fan-card__badge"
-                >
-                  {card.transition}
-                </motion.span>
-                <motion.h3
-                  layout="position"
-                  transition={expandTransition}
-                  className="fan-card__title"
-                >
-                  {card.title}
-                </motion.h3>
-                <motion.p
-                  layout="position"
-                  transition={expandTransition}
-                  className="fan-card__text"
-                >
-                  {card.description}
-                </motion.p>
+                {!card.backgroundImage && (
+                  <>
+                    <motion.span
+                      layout="position"
+                      transition={expandTransition}
+                      className="fan-card__badge"
+                    >
+                      {card.transition}
+                    </motion.span>
+                    <motion.h3
+                      layout="position"
+                      transition={expandTransition}
+                      className="fan-card__title"
+                    >
+                      {card.title}
+                    </motion.h3>
+                    <motion.p
+                      layout="position"
+                      transition={expandTransition}
+                      className="fan-card__text"
+                    >
+                      {card.description}
+                    </motion.p>
+                  </>
+                )}
               </motion.button>
             );
           })}
