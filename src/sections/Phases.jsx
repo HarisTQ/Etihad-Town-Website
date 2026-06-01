@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import phase1Bg from '../assets/phase1-card.svg';
 import phase2Bg from '../assets/phase2-card.svg';
 import phase3Bg from '../assets/phase3-card.svg';
 import phase4Bg from '../assets/phase4-card.svg';
+import phase1Video from '../assets/video-p1.mp4';
 
 const cards = [
   {
@@ -50,6 +51,7 @@ export default function Phases() {
   const [activeSlug, setActiveSlug] = useState(null);
   const [hoveredSlug, setHoveredSlug] = useState(null);
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 900);
+  const phase1VideoRef = useRef(null);
   const activeCard = useMemo(
     () => cards.find((card) => card.slug === activeSlug) ?? null,
     [activeSlug],
@@ -86,6 +88,13 @@ export default function Phases() {
     window.addEventListener('resize', onResize, { passive: true });
     return () => window.removeEventListener('resize', onResize);
   }, []);
+
+  useEffect(() => {
+    if (activeSlug !== 'phase-1' || !phase1VideoRef.current) return;
+    const video = phase1VideoRef.current;
+    video.muted = false;
+    video.play().catch(() => {});
+  }, [activeSlug]);
 
   const openCard = (slug) => {
     const next = new URL(window.location.href);
@@ -229,6 +238,20 @@ export default function Phases() {
                 >
                   {activeCard.description}
                 </motion.p>
+                {activeCard.slug === 'phase-1' && (
+                  <div className="phase-page__media">
+                    <video
+                      ref={phase1VideoRef}
+                      className="phase-page__video"
+                      src={phase1Video}
+                      controls
+                      autoPlay
+                      playsInline
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                )}
               </motion.div>
             </motion.section>
           </>
