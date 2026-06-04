@@ -39,16 +39,16 @@ export default function Features() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="features" className="section relative overflow-hidden bg-page">
+    <section id="features" className="relative overflow-hidden bg-page py-10 md:py-14 lg:py-16">
       <div className="site-container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7 }}
-          className="mb-16 text-center"
+          className="mb-8 text-center sm:mb-10 md:mb-12"
         >
-          <h2 className="text-4xl font-bold leading-tight text-ink md:text-5xl">
+          <h2 className="text-[2.15rem] font-bold leading-none text-ink sm:text-4xl md:text-5xl">
             Why Etihad Town ?
           </h2>
         </motion.div>
@@ -58,7 +58,7 @@ export default function Features() {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
-          className="mt-12 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-6 lg:grid-cols-4 lg:gap-8"
+          className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-6 lg:grid-cols-4 lg:gap-8"
         >
           {features.map((feat) => {
             const Icon = feat.icon;
