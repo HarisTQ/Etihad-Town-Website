@@ -7,6 +7,7 @@ import mapP3 from '../assets/map-p3.jpg';
 import payP1 from '../assets/payment-plan-1.webp';
 import payP2 from '../assets/payment-plan-2.webp';
 import payP3 from '../assets/paymwnt-plan-3c.webp';
+import payP4 from '../assets/payment-plan-p4.png';
 import card1 from '../assets/phase1-card.svg';
 import card2 from '../assets/phase2-card.svg';
 import card3 from '../assets/phase3-card.svg';
@@ -93,7 +94,7 @@ export const phases = [
       'The newest launch with modern planning standards and long-term investment upside. Full details are being finalised — check back soon.',
     card: card4,
     video: null,
-    paymentPlan: null,
+    paymentPlan: payP4,
     map: null,
     vrTour: null,
     location: 'https://maps.app.goo.gl/qkffzDEaCbWEovvK6',

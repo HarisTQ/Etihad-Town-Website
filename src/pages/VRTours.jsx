@@ -54,6 +54,7 @@ export default function VRTours() {
             label={`Etihad Town ${active.name}`}
             phone={PRIMARY_PHONE.display}
             height="72vh"
+            masks={active.vrMask}
           />
           <div className="mt-4 flex flex-col items-start justify-between gap-3 px-1 sm:flex-row sm:items-center">
             <p className="text-sm text-muted">
