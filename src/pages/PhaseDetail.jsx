@@ -201,21 +201,36 @@ export default function PhaseDetail() {
             {/* 5. LOCATION */}
             <section>
               <SectionHeading index={5} tag="Find Us" title="Location" />
-              <div className="card flex flex-col items-start gap-5 rounded-3xl p-7 md:flex-row md:items-center md:justify-between md:p-9">
-                <div className="flex items-start gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-brand-blue/25 bg-brand-blue/10">
-                    <MapPin size={22} className="text-brand-blue" />
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-semibold text-ink-2">Etihad Town {phase.name}</h3>
-                    <p className="mt-1 max-w-md text-sm leading-relaxed text-body">
-                      Main Raiwind Road, Lahore. Tap below to open live directions in Google Maps.
-                    </p>
+              <div className="card overflow-hidden rounded-3xl">
+                {/* Live, interactive Google Maps preview */}
+                {phase.mapEmbed && (
+                  <iframe
+                    src={phase.mapEmbed}
+                    title={`Etihad Town ${phase.name} location map`}
+                    className="block w-full border-0"
+                    style={{ height: 'min(60vh, 460px)' }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                )}
+                {/* Address + directions */}
+                <div className="flex flex-col items-start gap-5 border-t border-line p-6 md:flex-row md:items-center md:justify-between md:p-7">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-brand-blue/25 bg-brand-blue/10">
+                      <MapPin size={22} className="text-brand-blue" />
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-semibold text-ink-2">Etihad Town {phase.name}</h3>
+                      <p className="mt-1 max-w-md text-sm leading-relaxed text-body">
+                        Main Raiwind Road, Lahore. Tap below for live directions in Google Maps.
+                      </p>
+                    </div>
                   </div>
+                  <a href={phase.location} target="_blank" rel="noopener noreferrer" className="btn-primary w-full justify-center md:w-auto">
+                    <Compass size={16} /> Open in Google Maps <ExternalLink size={14} />
+                  </a>
                 </div>
-                <a href={phase.location} target="_blank" rel="noopener noreferrer" className="btn-primary w-full justify-center md:w-auto">
-                  <Compass size={16} /> Open in Google Maps <ExternalLink size={14} />
-                </a>
               </div>
             </section>
           </div>
@@ -245,6 +260,33 @@ export default function PhaseDetail() {
                 </a>
               )}
             </div>
+
+            {/* Location map preview */}
+            {phase.mapEmbed && (
+              <section>
+                <SectionHeading index={1} tag="Find Us" title="Location" />
+                <div className="card overflow-hidden rounded-3xl">
+                  <iframe
+                    src={phase.mapEmbed}
+                    title={`Etihad Town ${phase.name} location map`}
+                    className="block w-full border-0"
+                    style={{ height: 'min(55vh, 420px)' }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                  <div className="flex items-center justify-between gap-4 border-t border-line p-6">
+                    <div className="flex items-center gap-3">
+                      <MapPin size={18} className="text-brand-blue" />
+                      <span className="text-sm font-medium text-ink-2">Etihad Town {phase.name}, Lahore</span>
+                    </div>
+                    <a href={phase.location} target="_blank" rel="noopener noreferrer" className="btn-primary btn-sm shrink-0">
+                      <Compass size={14} /> Directions
+                    </a>
+                  </div>
+                </div>
+              </section>
+            )}
           </div>
         )}
 

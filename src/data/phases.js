@@ -34,6 +34,7 @@ export const phases = [
     map: mapP1,
     vrTour: 'https://etihadtown.com.pk/ET-tour/et1.html',
     location: 'https://maps.app.goo.gl/pcJssyYQLgSmp4Un8',
+    mapEmbed: 'https://www.google.com/maps?q=Etihad+Town+Phase+1,+Raiwind+Road,+Lahore&z=14&output=embed',
     vrMask: [
       { corner: 'top-left', w: 22, h: 14 },
       { corner: 'top-right', w: 22, h: 14 },
@@ -54,6 +55,7 @@ export const phases = [
     map: mapP2,
     vrTour: 'https://etihadtown.com.pk/vtour/index.html',
     location: 'https://maps.app.goo.gl/JwaymhpWwA1wjsrs9',
+    mapEmbed: 'https://www.google.com/maps?q=Etihad+Town+Phase+2,+Lahore&z=14&output=embed',
     vrMask: [
       { corner: 'top-left', w: 22, h: 14 },
       { corner: 'top-right', w: 22, h: 14 },
@@ -74,6 +76,7 @@ export const phases = [
     map: mapP3,
     vrTour: 'https://etihadtown.com.pk/ET3-tour/',
     location: 'https://maps.app.goo.gl/5sbG6SuU4ehp2xJr5',
+    mapEmbed: 'https://www.google.com/maps?q=Etihad+Town+Phase+3,+Lahore&z=14&output=embed',
     vrMask: [
       { corner: 'top-left', w: 22, h: 14 },
       { corner: 'top-right', w: 22, h: 14 },
@@ -94,6 +97,7 @@ export const phases = [
     map: null,
     vrTour: null,
     location: 'https://maps.app.goo.gl/qkffzDEaCbWEovvK6',
+    mapEmbed: 'https://www.google.com/maps?q=Etihad+Town+Phase+4,+Kahna+Nau,+Lahore&z=14&output=embed',
     vrMask: [],
     available: false,
   },

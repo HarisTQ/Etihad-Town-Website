@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Compass } from 'lucide-react';
 import { PRIMARY_PHONE } from '../data/site';
+import logo from '../assets/etihad-town-seeklogo.png';
 
 // type 'section' links scroll within Home; type 'route' links navigate.
 const navLinks = [
@@ -61,11 +62,14 @@ export default function Navbar() {
             <Link
               to="/"
               className="flex flex-col leading-none cursor-pointer group"
+              aria-label="Etihad Town Lahore — Home"
             >
-              <span className={`font-bold text-xl tracking-tight font-[Poppins] ${solid ? 'text-ink' : 'text-white'}`}>
-                ETIHAD TOWN
-              </span>
-              <span className="text-brand-green font-semibold text-xs tracking-[0.25em] uppercase">
+              <img
+                src={logo}
+                alt="Etihad Town"
+                className={`h-9 w-auto md:h-10 transition-all duration-300 ${solid ? '' : 'brightness-0 invert drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)]'}`}
+              />
+              <span className={`mt-1 pl-0.5 text-[10px] font-semibold uppercase tracking-[0.3em] transition-colors ${solid ? 'text-brand-green' : 'text-white/85'}`}>
                 Lahore
               </span>
             </Link>
