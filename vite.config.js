@@ -8,4 +8,13 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  // Allow tunneled hosts (e.g. ngrok) to reach the preview/dev server.
+  preview: {
+    host: true,
+    port: 4173,
+    allowedHosts: true,
+  },
+  server: {
+    allowedHosts: true,
+  },
 })

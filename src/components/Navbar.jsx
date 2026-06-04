@@ -1,41 +1,48 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, Navigation } from 'lucide-react';
+import { Menu, X, Phone, Compass } from 'lucide-react';
+import { PRIMARY_PHONE } from '../data/site';
+import logo from '../assets/etihad-town-seeklogo.png';
 
+// type 'section' links scroll within Home; type 'route' links navigate.
 const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Features', href: '#features' },
-  { label: 'Location', href: '#location' },
-  { label: 'Payment Plan', href: '#payment-plan' },
-  { label: 'Contact Us', href: '#contact' },
+  { label: 'Home', type: 'section', target: 'home' },
+  { label: 'Phases', type: 'section', target: 'phases' },
+  { label: 'Features', type: 'section', target: 'features' },
+  { label: 'VR Tours', type: 'route', target: '/vr-tours' },
+  { label: 'Contact Us', type: 'section', target: 'contact' },
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 50);
-      const sections = ['home', 'features', 'location', 'payment-plan', 'contact'];
-      for (const id of [...sections].reverse()) {
-        const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 100) {
-          setActiveSection(id);
-          break;
-        }
-      }
-    };
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleNav = (href) => {
+  const solid = scrolled || location.pathname !== '/';
+
+  const handleLink = (link) => {
     setMenuOpen(false);
-    const id = href.replace('#', '');
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (link.type === 'route') {
+      navigate(link.target);
+      return;
+    }
+    // section link
+    if (location.pathname === '/') {
+      const el = document.getElementById(link.target);
+      el?.scrollIntoView({ behavior: 'smooth' });
+      window.history.replaceState(null, '', link.target === 'home' ? '/' : `/#${link.target}`);
+    } else {
+      navigate(link.target === 'home' ? '/' : `/#${link.target}`);
+    }
   };
 
   return (
@@ -44,38 +51,41 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? 'bg-[rgba(11,18,32,0.85)] backdrop-blur-xl border-b border-white/10 shadow-2xl'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${solid
+          ? 'bg-white/90 backdrop-blur-xl border-b border-line shadow-soft'
           : 'bg-transparent'
           }`}
       >
         <div className="site-container">
           <div className="flex items-center justify-between h-18 py-4">
             {/* Logo */}
-            <motion.a
-              href="#home"
-              onClick={() => handleNav('#home')}
+            <Link
+              to="/"
               className="flex flex-col leading-none cursor-pointer group"
-              whileHover={{ scale: 1.02 }}
+              aria-label="Etihad Town Lahore — Home"
             >
-              <span className="text-white font-bold text-xl tracking-tight font-[Poppins]">
-                ETIHAD TOWN
+              <img
+                src={logo}
+                alt="Etihad Town"
+                className={`h-9 w-auto md:h-10 transition-all duration-300 ${solid ? '' : 'brightness-0 invert drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)]'}`}
+              />
+              <span className={`mt-1 pl-0.5 text-[10px] font-semibold uppercase tracking-[0.3em] transition-colors ${solid ? 'text-brand-green' : 'text-white/85'}`}>
+                Lahore
               </span>
-              <span className="text-[#5DBB63] font-semibold text-xs tracking-[0.25em] uppercase">
-                Phase 4 • Lahore
-              </span>
-
-            </motion.a>
+            </Link>
 
             {/* Desktop Nav Links */}
             <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => {
-                const isActive = activeSection === link.href.replace('#', '');
+                const isActive =
+                  link.type === 'route' && location.pathname === link.target;
                 return (
                   <button
-                    key={link.href}
-                    onClick={() => handleNav(link.href)}
-                    className={`relative text-sm font-medium tracking-wide transition-colors duration-300 group ${isActive ? 'text-white' : 'text-white/70 hover:text-white'
+                    key={link.label}
+                    onClick={() => handleLink(link)}
+                    className={`relative text-sm font-medium tracking-wide transition-colors duration-300 group ${solid
+                      ? (isActive ? 'text-ink' : 'text-body hover:text-ink')
+                      : (isActive ? 'text-white' : 'text-white/80 hover:text-white')
                       }`}
                   >
                     {link.label}
@@ -91,19 +101,18 @@ export default function Navbar() {
             {/* CTA + Hamburger */}
             <div className="flex items-center gap-4">
               <motion.a
-                href="tel:+923001234567"
+                href={`tel:${PRIMARY_PHONE.tel}`}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="hidden md:flex btn-green text-sm px-5 py-3"
+                className="hidden md:flex btn-green btn-sm"
               >
                 <Phone size={15} />
                 Book Your Plot
               </motion.a>
 
-              {/* Hamburger */}
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="lg:hidden p-2 rounded-lg text-white/80 hover:text-white transition-colors"
+                className={`lg:hidden p-2 rounded-lg transition-colors ${solid ? 'text-ink/80 hover:text-ink' : 'text-white/80 hover:text-white'}`}
                 aria-label="Toggle menu"
               >
                 {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -121,26 +130,24 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="fixed top-[68px] left-0 right-0 z-40 bg-[rgba(11,18,32,0.97)] backdrop-blur-xl border-b border-white/10 lg:hidden"
+            className="fixed top-[68px] left-0 right-0 z-40 bg-white border-b border-line shadow-soft-lg lg:hidden"
           >
-            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-2">
+            <div className="site-container py-6 flex flex-col gap-2">
               {navLinks.map((link, i) => (
                 <motion.button
-                  key={link.href}
+                  key={link.label}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.07 }}
-                  onClick={() => handleNav(link.href)}
-                  className={`text-left px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 ${activeSection === link.href.replace('#', '')
-                    ? 'bg-[#003B73]/30 text-white border border-[#003B73]/50'
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
-                    }`}
+                  onClick={() => handleLink(link)}
+                  className="text-left px-4 py-3.5 rounded-xl text-sm font-medium text-body hover:text-ink hover:bg-surface-2 transition-all duration-200 flex items-center gap-2"
                 >
+                  {link.label === 'VR Tours' && <Compass size={15} className="text-brand-green" />}
                   {link.label}
                 </motion.button>
               ))}
               <div className="pt-2">
-                <a href="tel:+923001234567" className="btn-green w-full justify-center text-sm py-3.5">
+                <a href={`tel:${PRIMARY_PHONE.tel}`} className="btn-green w-full justify-center">
                   <Phone size={15} />
                   Book Your Plot Now
                 </a>

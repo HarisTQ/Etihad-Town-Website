@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, MessageCircle, X, Plus } from 'lucide-react';
+import { Phone, X, MessageCircle } from 'lucide-react';
+import { PHONES, WHATSAPP_LINK } from '../data/site';
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -8,81 +9,86 @@ const WhatsAppIcon = () => (
   </svg>
 );
 
+// Build the action list: WhatsApp + both call numbers.
+const actions = [
+  {
+    key: 'wa',
+    label: 'Chat on WhatsApp',
+    href: WHATSAPP_LINK,
+    external: true,
+    icon: <WhatsAppIcon />,
+    bg: 'linear-gradient(135deg, #25D366, #128C7E)',
+    glow: 'rgba(37, 211, 102, 0.4)',
+  },
+  ...PHONES.map((p, i) => ({
+    key: `tel-${i}`,
+    label: `Call ${p.display}`,
+    href: `tel:${p.tel}`,
+    external: false,
+    icon: <Phone size={19} />,
+    bg: 'linear-gradient(135deg, #003B73, #004d96)',
+    glow: 'rgba(0, 59, 115, 0.5)',
+  })),
+];
+
 export default function FloatingContact() {
   const [open, setOpen] = useState(false);
+  const [hint, setHint] = useState(false);
+
+  // Periodically nudge the user with a small "Need help?" bubble while closed.
+  // (Rendering already guards on !open, so no need to reset hint when open.)
+  useEffect(() => {
+    if (open) return;
+    const show = setTimeout(() => setHint(true), 3500);
+    const hide = setTimeout(() => setHint(false), 9500);
+    return () => { clearTimeout(show); clearTimeout(hide); };
+  }, [open]);
 
   return (
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
-      {/* Expanded buttons */}
       <AnimatePresence>
-        {open && (
-          <>
-            {/* WhatsApp */}
+        {open &&
+          actions.map((a, i) => (
             <motion.a
-              href="https://wa.me/923001234567"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, scale: 0.5, y: 20 }}
+              key={a.key}
+              href={a.href}
+              target={a.external ? '_blank' : undefined}
+              rel={a.external ? 'noopener noreferrer' : undefined}
+              initial={{ opacity: 0, scale: 0.4, y: 24 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.5, y: 20 }}
-              transition={{ duration: 0.25, delay: 0.05 }}
+              exit={{ opacity: 0, scale: 0.4, y: 24 }}
+              transition={{ duration: 0.22, delay: i * 0.06 }}
               className="flex items-center gap-3 group"
-              aria-label="WhatsApp"
+              aria-label={a.label}
             >
+              <span className="card text-ink-2 text-xs font-medium px-3 py-1.5 rounded-full whitespace-nowrap">
+                {a.label}
+              </span>
               <motion.span
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                transition={{ delay: 0.1 }}
-                className="glass-dark text-white text-xs font-medium px-3 py-1.5 rounded-full border border-white/10 whitespace-nowrap"
-              >
-                Chat on WhatsApp
-              </motion.span>
-              <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg"
-                style={{
-                  background: 'linear-gradient(135deg, #25D366, #128C7E)',
-                  boxShadow: '0 4px 20px rgba(37, 211, 102, 0.4)',
-                }}
+                style={{ background: a.bg, boxShadow: '0 8px 24px rgba(16,24,40,0.18)' }}
               >
-                <WhatsAppIcon />
-              </motion.div>
+                {a.icon}
+              </motion.span>
             </motion.a>
+          ))}
+      </AnimatePresence>
 
-            {/* Call */}
-            <motion.a
-              href="tel:+923001234567"
-              initial={{ opacity: 0, scale: 0.5, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.5, y: 20 }}
-              transition={{ duration: 0.25 }}
-              className="flex items-center gap-3 group"
-              aria-label="Call"
-            >
-              <motion.span
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                transition={{ delay: 0.05 }}
-                className="glass-dark text-white text-xs font-medium px-3 py-1.5 rounded-full border border-white/10 whitespace-nowrap"
-              >
-                Call Sales Team
-              </motion.span>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg"
-                style={{
-                  background: 'linear-gradient(135deg, #003B73, #004d96)',
-                  boxShadow: '0 4px 20px rgba(0, 59, 115, 0.5)',
-                }}
-              >
-                <Phone size={19} />
-              </motion.div>
-            </motion.a>
-          </>
+      {/* Attention bubble (closed state) */}
+      <AnimatePresence>
+        {!open && hint && (
+          <motion.button
+            onClick={() => setOpen(true)}
+            initial={{ opacity: 0, x: 20, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 20, scale: 0.8 }}
+            className="card mb-1 mr-1 rounded-2xl rounded-br-sm px-4 py-2.5 text-left shadow-xl"
+          >
+            <div className="text-xs font-semibold text-ink-2">Need help? 👋</div>
+            <div className="text-[11px] text-muted">Call or WhatsApp us now</div>
+          </motion.button>
         )}
       </AnimatePresence>
 
@@ -91,6 +97,8 @@ export default function FloatingContact() {
         onClick={() => setOpen(!open)}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.93 }}
+        animate={open ? {} : { rotate: [0, -8, 8, -8, 8, 0] }}
+        transition={open ? {} : { duration: 0.9, repeat: Infinity, repeatDelay: 3.5 }}
         className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-xl relative"
         style={{
           background: open
@@ -102,20 +110,27 @@ export default function FloatingContact() {
         }}
         aria-label={open ? 'Close contact options' : 'Open contact options'}
       >
-        <motion.div
-          animate={{ rotate: open ? 45 : 0 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-        >
-          <Plus size={22} />
-        </motion.div>
+        <AnimatePresence mode="wait" initial={false}>
+          {open ? (
+            <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+              <X size={24} />
+            </motion.span>
+          ) : (
+            <motion.span key="chat" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+              <MessageCircle size={24} className="fill-white/15" />
+            </motion.span>
+          )}
+        </AnimatePresence>
 
-        {/* Pulse ring (only when closed) */}
         {!open && (
-          <motion.div
-            className="absolute inset-0 rounded-full border-2 border-[#5DBB63]"
-            animate={{ scale: [1, 1.4, 1], opacity: [0.8, 0, 0.8] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          />
+          <>
+            <motion.span
+              className="absolute inset-0 rounded-full border-2 border-[#5DBB63]"
+              animate={{ scale: [1, 1.45, 1], opacity: [0.8, 0, 0.8] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+            />
+            <span className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full bg-[#25D366] ring-2 ring-white" />
+          </>
         )}
       </motion.button>
     </div>

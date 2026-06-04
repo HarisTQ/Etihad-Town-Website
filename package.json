@@ -1,8 +1,11 @@
 {
-  "name": "itehadtown",
+  "name": "etihad-town-website",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,7 +16,8 @@
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
