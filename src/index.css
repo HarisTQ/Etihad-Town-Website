@@ -1,30 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN TOKENS — light, clean, corporate (matches official site)
+   ============================================================ */
 :root {
+  /* Page + surfaces */
+  --page: #FFFFFF;
+  --page-tint: #F6F8FB;
+  --surface: #FFFFFF;
+  --surface-2: #F2F5F9;
+
+  /* Borders (only two) */
+  --line: #E3E8EF;
+  --line-strong: #CBD5E1;
+
+  /* Text scale */
+  --ink: #0B1220;      /* headings */
+  --ink-2: #1F2A3D;    /* sub-headings */
+  --body: #475569;     /* body copy */
+  --muted: #64748B;    /* captions / meta */
+  --faint: #94A3B8;    /* footnotes */
+
+  /* Brand */
   --brand-blue: #003B73;
+  --brand-blue-hover: #00509E;
   --brand-green: #5DBB63;
-  --brand-dark: #0B1220;
-  --brand-light: #E5E7EB;
+  --brand-green-hover: #4AA850;
 }
 
 @theme {
   --color-brand-blue: #003B73;
+  --color-brand-blue-hover: #00509E;
   --color-brand-green: #5DBB63;
-  --color-brand-dark: #0B1220;
-  --color-brand-light: #E5E7EB;
-  --color-brand-blue-light: #004d96;
-  --color-brand-green-dark: #4aa850;
+  --color-brand-green-hover: #4AA850;
+
+  --color-page: #FFFFFF;
+  --color-page-tint: #F6F8FB;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F2F5F9;
+
+  --color-line: #E3E8EF;
+  --color-line-strong: #CBD5E1;
+
+  --color-ink: #0B1220;
+  --color-ink-2: #1F2A3D;
+  --color-body: #475569;
+  --color-muted: #64748B;
+  --color-faint: #94A3B8;
+
   --font-poppins: 'Poppins', sans-serif;
-  --font-montserrat: 'Montserrat', sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* NOTE: do NOT add an unlayered `* { margin:0; padding:0 }` reset here —
+   Tailwind v4 Preflight already resets these inside its layer, and an
+   unlayered universal reset overrides every p-*/m-*/mx-auto utility site-wide. */
 
 html {
   scroll-behavior: smooth;
@@ -33,208 +64,24 @@ html {
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #0B1220;
-  color: #ffffff;
+  background-color: var(--page);
+  color: var(--body);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #0B1220;
-}
-::-webkit-scrollbar-thumb {
-  background: #003B73;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #5DBB63;
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #EEF2F7; }
+::-webkit-scrollbar-thumb { background: var(--brand-blue); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-green); }
 
-/* Glassmorphism utility */
-.glass {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
+/* ============================================================
+   LAYOUT
+   ============================================================ */
 
-.glass-dark {
-  background: rgba(11, 18, 32, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-blue {
-  background: rgba(0, 59, 115, 0.3);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 59, 115, 0.5);
-}
-
-/* Text gradients */
-.text-gradient-blue {
-  background: linear-gradient(135deg, #003B73, #004d96, #5DBB63);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-green {
-  background: linear-gradient(135deg, #5DBB63, #7dd882);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Glow effects */
-.glow-blue {
-  box-shadow: 0 0 30px rgba(0, 59, 115, 0.4), 0 0 60px rgba(0, 59, 115, 0.2);
-}
-
-.glow-green {
-  box-shadow: 0 0 30px rgba(93, 187, 99, 0.4), 0 0 60px rgba(93, 187, 99, 0.2);
-}
-
-/* Section divider */
-.section-divider {
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #003B73, #5DBB63);
-  border-radius: 2px;
-}
-
-/* Hover card lift */
-.card-hover {
-  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.card-hover:hover {
-  transform: translateY(-8px);
-}
-
-/* Button styles */
-.btn-primary {
-  background: linear-gradient(135deg, #003B73, #004d96);
-  color: #ffffff;
-  padding: 14px 32px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.025em;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0, 59, 115, 0.5);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-primary:hover {
-  background: linear-gradient(135deg, #004d96, #0062c4);
-  box-shadow: 0 8px 32px rgba(0, 59, 115, 0.5);
-  transform: translateY(-2px);
-}
-
-.btn-green {
-  background: linear-gradient(135deg, #5DBB63, #4aa850);
-  color: #ffffff;
-  padding: 14px 32px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.025em;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-green:hover {
-  background: linear-gradient(135deg, #4aa850, #3d953f);
-  box-shadow: 0 8px 32px rgba(93, 187, 99, 0.45);
-  transform: translateY(-2px);
-}
-
-.btn-outline {
-  background: transparent;
-  color: #ffffff;
-  padding: 13px 32px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.025em;
-  transition: all 0.3s ease;
-  border: 1.5px solid rgba(255,255,255,0.6);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-outline:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: #ffffff;
-  box-shadow: 0 8px 32px rgba(255,255,255,0.12);
-  transform: translateY(-2px);
-}
-
-/* Section heading style */
-.section-tag {
-  display: inline-block;
-  background: rgba(93, 187, 99, 0.12);
-  color: #5DBB63;
-  border: 1px solid rgba(93, 187, 99, 0.3);
-  padding: 4px 16px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-/* Noise texture overlay */
-.noise-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.04;
-}
-
-/* Section spacing for balance */
-section {
-  margin: 0;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-@media (min-width: 768px) {
-  section {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-}
-
-#home {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-/* Foolproof Site Container to guarantee margins */
+/* Site container — consistent max-width + responsive gutters */
 .site-container {
   width: 100%;
   max-width: 1440px;
@@ -243,26 +90,101 @@ section {
   padding-left: 24px;
   padding-right: 24px;
 }
-
 @media (min-width: 640px) {
-  .site-container {
-    padding-left: 48px;
-    padding-right: 48px;
-  }
+  .site-container { padding-left: 48px; padding-right: 48px; }
 }
-
 @media (min-width: 1024px) {
-  .site-container {
-    padding-left: 80px;
-    padding-right: 80px;
-  }
+  .site-container { padding-left: 80px; padding-right: 80px; }
 }
 
-.phase-section {
-  perspective: 1700px;
-  padding-top: 1.25rem;
-  padding-bottom: 1.75rem;
+/* Single vertical rhythm — every section uses .section (Hero is min-h-screen) */
+.section { padding-top: 4rem; padding-bottom: 4rem; }
+@media (min-width: 768px) { .section { padding-top: 6rem; padding-bottom: 6rem; } }
+@media (min-width: 1024px) { .section { padding-top: 7rem; padding-bottom: 7rem; } }
+
+/* ============================================================
+   SURFACES + SHADOWS
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px rgba(16, 24, 40, 0.06);
 }
+.card:hover { border-color: var(--line-strong); }
+
+.shadow-soft { box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px rgba(16, 24, 40, 0.06); }
+.shadow-soft-lg { box-shadow: 0 2px 4px rgba(16, 24, 40, 0.05), 0 12px 32px rgba(16, 24, 40, 0.10); }
+
+/* ============================================================
+   TEXT GRADIENTS (readable on white)
+   ============================================================ */
+.text-gradient-blue {
+  background: linear-gradient(135deg, #003B73, #00509E, #2f8f43);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-green {
+  background: linear-gradient(135deg, #3a9d4e, #5DBB63);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================
+   BUTTONS (solid, no gradients/glows)
+   ============================================================ */
+.btn-primary,
+.btn-green,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+.btn-primary { background: var(--brand-blue); color: #fff; }
+.btn-primary:hover { background: var(--brand-blue-hover); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(0, 59, 115, 0.22); }
+
+.btn-green { background: var(--brand-green); color: #fff; }
+.btn-green:hover { background: var(--brand-green-hover); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(93, 187, 99, 0.28); }
+
+.btn-outline { background: transparent; color: var(--brand-blue); border: 1.5px solid var(--line-strong); }
+.btn-outline:hover { background: var(--page-tint); border-color: var(--brand-blue); transform: translateY(-1px); }
+
+/* Small / pill modifier (nav CTA, tabs, chips) */
+.btn-sm { padding: 8px 18px; font-size: 0.8125rem; }
+
+/* ============================================================
+   EYEBROW / SECTION TAG
+   ============================================================ */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(93, 187, 99, 0.10);
+  color: #2f8f43;
+  border: 1px solid rgba(93, 187, 99, 0.28);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   PHASES — fan of cards (cream SVG art on light page)
+   ============================================================ */
+.phase-section { perspective: 1700px; }
 
 .fan-stage {
   position: relative;
@@ -283,9 +205,9 @@ section {
   left: 50%;
   width: var(--fan-card-width);
   margin-left: calc(var(--fan-card-width) / -2);
-  border-radius: 28px;
+  border-radius: 24px;
   min-height: 272px;
-  padding: 19px 18px 17px;
+  padding: 0;
   text-align: left;
   cursor: pointer;
   overflow: hidden;
@@ -293,160 +215,57 @@ section {
   transform-origin: center bottom;
   will-change: transform, opacity;
   backface-visibility: hidden;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background:
-    radial-gradient(120% 120% at 10% 0%, rgba(93, 187, 99, 0.16), transparent 42%),
-    radial-gradient(100% 100% at 100% 100%, rgba(0, 59, 115, 0.18), transparent 52%),
-    linear-gradient(180deg, rgba(24, 33, 49, 0.97), rgba(14, 21, 35, 0.98));
-  background-size: cover, cover, cover;
-  background-position: center, center, center;
+  /* cream card art is supplied inline via background:url(...) */
+  background-color: #f5f3ed;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 30px rgba(16, 24, 40, 0.12);
   isolation: isolate;
-  transition: box-shadow 0.28s ease, filter 0.28s ease;
-}
-
-.fan-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(9, 15, 29, 0.78), rgba(9, 15, 29, 0.92));
-  pointer-events: none;
-}
-
-.fan-card--imageOnly::before {
-  display: none;
-}
-
-.fan-card > * {
-  position: relative;
-  z-index: 1;
+  transition: box-shadow 0.28s ease, transform 0.28s ease;
 }
 
 .fan-card:hover,
 .fan-card:focus-visible {
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  filter: brightness(1.04);
+  box-shadow: 0 16px 44px rgba(16, 24, 40, 0.18);
 }
 
-.fan-card__badge {
-  display: inline-block;
-  font-size: 0.66rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #c8d8ea;
-  background: rgba(0, 59, 115, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  padding: 6px 10px;
-  margin-bottom: 14px;
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.fan-card__title {
-  font-size: clamp(1rem, 1.46vw, 1.38rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #fff;
-  margin-bottom: 10px;
-}
-
-.fan-card__text {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.74rem;
-  line-height: 1.45;
-}
-
-.phase-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(7, 11, 22, 0.72);
-  backdrop-filter: blur(6px);
-  z-index: 80;
-}
-
-.phase-page {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  border-radius: 0;
-  padding: clamp(24px, 4vw, 56px);
-  background:
-    radial-gradient(120% 120% at 8% 0%, rgba(93, 187, 99, 0.22), transparent 42%),
-    radial-gradient(120% 120% at 100% 100%, rgba(0, 59, 115, 0.28), transparent 48%),
-    #090f1d;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.phase-page__content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 100%;
-  padding-bottom: 32px;
-}
-
-.phase-page__title {
-  font-size: clamp(2rem, 6vw, 4rem);
-  line-height: 1.05;
-  margin-bottom: 18px;
-}
-
-.phase-page__text {
-  max-width: 720px;
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.phase-page__media {
-  margin-top: 22px;
-  width: min(920px, 100%);
-}
-
-.phase-page__video {
-  width: 100%;
-  display: block;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
-  background: #000;
-}
-
-.phase-close {
+/* Bottom CTA pill on phase cards */
+.fan-card__label {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(0, 0, 0, 0.24);
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 999px;
-  cursor: pointer;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 18px 14px 16px;
+  background: linear-gradient(to top, rgba(11, 18, 32, 0.72) 4%, transparent);
 }
 
-.phase-close:hover {
-  background: rgba(255, 255, 255, 0.1);
+.fan-card__label-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--brand-blue);
+  box-shadow: 0 6px 18px rgba(0, 59, 115, 0.28);
 }
 
 @media (max-width: 900px) {
-  .phase-section {
-    padding-top: 1.5rem;
-    padding-bottom: 1.25rem;
-  }
-
+  /* Two cards per row on mobile so customers don't scroll endlessly */
   .fan-stage {
     height: auto;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     align-items: stretch;
   }
 
@@ -456,10 +275,12 @@ section {
     bottom: auto;
     margin-left: 0;
     width: 100%;
-    min-height: 220px;
+    min-width: 0;
+    min-height: 0;
+    aspect-ratio: 3 / 4;
+    border-radius: 18px;
   }
 
-  .phase-page__media {
-    margin-top: 18px;
-  }
+  .fan-card__label { padding: 12px 10px 11px; }
+  .fan-card__label-cta { font-size: 0.68rem; padding: 6px 12px; }
 }

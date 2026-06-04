@@ -29,7 +29,7 @@ export default function Hero() {
           <motion.img
             key={currentImageIndex}
             src={heroImages[currentImageIndex]}
-            alt={`Etihad Town Phase 4 - ${currentImageIndex + 1}`}
+            alt={`Etihad Town Lahore - ${currentImageIndex + 1}`}
             initial={{ opacity: 0, scale: 1.1 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
@@ -39,10 +39,10 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
-      {/* Multi-layer overlay */}
+      {/* Overlay for legibility */}
       <div className="absolute inset-0 z-[1]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B1220]/10 via-[#0B1220]/50 to-[#0B1220]/90" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#003B73]/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/85 via-[#0B1220]/45 to-[#0B1220]/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0B1220]/40 to-transparent" />
       </div>
 
       {/* Hero content */}
@@ -54,7 +54,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="section-tag">
+            <span className="section-tag !bg-black/30 !text-white !border-white/30">
               <MapPin size={11} className="inline mr-1" />
               Lahore's Most Premium Development
             </span>
@@ -70,7 +70,7 @@ export default function Hero() {
             Etihad Town
             <br />
             <span className="bg-gradient-to-r from-[#5DBB63] via-[#7dd882] to-[#5DBB63] bg-clip-text text-transparent">
-              Phase 4
+              Lahore
             </span>
           </motion.h1>
 
@@ -81,34 +81,15 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-white/75 text-lg md:text-xl font-light leading-relaxed mt-5 max-w-xl"
           >
-            Where visionary architecture meets timeless living. Secure your future in Lahore's most anticipated luxury residential community.
+            Where visionary architecture meets timeless living. Explore every phase of Lahore's most anticipated residential community on Main Raiwind Road.
           </motion.p>
-
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.75 }}
-            className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 mt-8 mb-10 justify-center lg:justify-start"
-          >
-            {[
-              { label: 'Plot Sizes', value: '3, 5, 10 Marla' },
-              { label: 'Installments', value: '3 Years' },
-              { label: 'Booking', value: '20% Down' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center lg:text-left flex-1 min-w-[120px]">
-                <div className="text-lg sm:text-xl font-bold text-white">{stat.value}</div>
-                <div className="text-white/50 text-xs uppercase tracking-widest mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </motion.div>
 
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start w-full sm:w-auto"
+            className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start w-full sm:w-auto mt-10"
           >
             <motion.button
               whileHover={{ scale: 1.04 }}
@@ -122,10 +103,10 @@ export default function Hero() {
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
-              onClick={() => scrollTo('payment-plan')}
-              className="btn-outline text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto justify-center"
+              onClick={() => scrollTo('phases')}
+              className="btn-outline text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto justify-center !text-white !border-white/70 hover:!bg-white/10"
             >
-              Explore Payment Plan
+              Explore Phases
             </motion.button>
           </motion.div>
         </div>
@@ -150,7 +131,7 @@ export default function Hero() {
       </motion.button>
 
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0B1220] to-transparent z-[2]" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-page to-transparent z-[2]" />
     </section>
   );
 }
