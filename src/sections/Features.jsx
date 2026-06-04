@@ -67,7 +67,7 @@ export default function Features() {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mt-16"
+          className="mt-16 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 lg:gap-8"
         >
           {features.map((feat) => {
             const Icon = feat.icon;
@@ -76,16 +76,16 @@ export default function Features() {
                 key={feat.title}
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-                className="card rounded-2xl p-8 flex flex-col h-full min-h-[240px] items-center text-center"
+                className="card flex h-full min-h-[220px] flex-col items-center rounded-2xl p-5 text-center sm:min-h-[240px] sm:p-8"
               >
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl sm:mb-5 sm:h-12 sm:w-12"
                   style={{ background: `${feat.color}14`, color: feat.color }}
                 >
-                  <Icon size={24} strokeWidth={1.8} />
+                  <Icon size={22} strokeWidth={1.8} />
                 </div>
-                <h3 className="text-ink-2 text-lg md:text-xl font-semibold mb-4 leading-tight">{feat.title}</h3>
-                <p className="text-body text-base md:text-lg leading-relaxed">{feat.description}</p>
+                <h3 className="mb-3 text-base font-semibold leading-tight text-ink-2 sm:mb-4 sm:text-lg md:text-xl">{feat.title}</h3>
+                <p className="text-sm leading-relaxed text-body sm:text-base md:text-lg">{feat.description}</p>
               </motion.div>
             );
           })}
