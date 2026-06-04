@@ -27,11 +27,11 @@ export default function Phases() {
   const openPhase = (id) => navigate(`/phase/${id}`);
 
   return (
-    <section id="phases" className="phase-section section relative bg-page-tint">
+    <section id="phases" className="phase-section section relative">
       <div className="site-container">
         <div className="mb-8 text-center md:mb-10">
           <span className="section-tag">Our Phases</span>
-          <h2 className="mt-1 text-4xl font-bold leading-tight text-ink md:text-5xl">
+          <h2 className="mt-1 text-4xl font-bold leading-tight text-white md:text-5xl">
             Explore Each Phase
             <span className="block text-gradient-blue">Tap a Card for Full Details</span>
           </h2>

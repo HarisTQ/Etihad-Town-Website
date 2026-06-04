@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -11,7 +11,32 @@ import VRTours from './pages/VRTours';
 // themselves on the Home page).
 function ScrollManager() {
   const { pathname, hash } = useLocation();
+  const isInitialHomeLoad = useRef(true);
+  const skipInitialHashScroll = useRef(false);
+
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    if (isInitialHomeLoad.current && pathname === '/') {
+      window.scrollTo(0, 0);
+
+      if (hash) {
+        skipInitialHashScroll.current = true;
+        window.history.replaceState(null, '', '/');
+      }
+    }
+
+    isInitialHomeLoad.current = false;
+  }, [pathname, hash]);
+
   useEffect(() => {
+    if (skipInitialHashScroll.current) {
+      skipInitialHashScroll.current = false;
+      return;
+    }
+
     if (hash) {
       // Wait a tick for the target route/section to render, then scroll to it.
       const id = hash.slice(1);

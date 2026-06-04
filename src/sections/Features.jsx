@@ -56,10 +56,8 @@ export default function Features() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <span className="section-tag">Why Etihad Town</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-ink mt-3 leading-tight">
-            Built for the Elite
-            <span className="block text-gradient-blue">Accessible to All</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-ink leading-tight">
+            Why Etihad Town ?
           </h2>
         </motion.div>
 

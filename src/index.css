@@ -9,6 +9,7 @@
   /* Page + surfaces */
   --page: #FFFFFF;
   --page-tint: #F6F8FB;
+  --phases-bg: #021C3C;
   --surface: #FFFFFF;
   --surface-2: #F2F5F9;
 
@@ -38,6 +39,7 @@
 
   --color-page: #FFFFFF;
   --color-page-tint: #F6F8FB;
+  --color-phases-bg: #021C3C;
   --color-surface: #FFFFFF;
   --color-surface-2: #F2F5F9;
 
@@ -184,7 +186,22 @@ body {
 /* ============================================================
    PHASES — fan of cards (cream SVG art on light page)
    ============================================================ */
-.phase-section { perspective: 1700px; }
+.phase-section {
+  perspective: 1700px;
+  background: linear-gradient(180deg, #021C3C 0%, #032754 100%);
+}
+
+.phase-section .section-tag {
+  background: rgba(255, 255, 255, 0.12);
+  color: #E7F1FF;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.phase-section .text-gradient-blue {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: #CFE4FF;
+}
 
 .fan-stage {
   position: relative;

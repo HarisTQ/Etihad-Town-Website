@@ -9,6 +9,7 @@ import logo from '../assets/etihad-town-seeklogo.png';
 const navLinks = [
   { label: 'Home', type: 'section', target: 'home' },
   { label: 'Phases', type: 'section', target: 'phases' },
+  { label: 'Hot Deal', type: 'section', target: 'hot-deal' },
   { label: 'Features', type: 'section', target: 'features' },
   { label: 'VR Tours', type: 'route', target: '/vr-tours' },
   { label: 'Contact Us', type: 'section', target: 'contact' },
@@ -67,9 +68,9 @@ export default function Navbar() {
               <img
                 src={logo}
                 alt="Etihad Town"
-                className={`h-9 w-auto md:h-10 transition-all duration-300 ${solid ? '' : 'brightness-0 invert drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)]'}`}
+                className="h-9 w-auto transition-all duration-300 md:h-10"
               />
-              <span className={`mt-1 pl-0.5 text-[10px] font-semibold uppercase tracking-[0.3em] transition-colors ${solid ? 'text-brand-green' : 'text-white/85'}`}>
+              <span className="mt-1 pl-0.5 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-green transition-colors">
                 Lahore
               </span>
             </Link>
