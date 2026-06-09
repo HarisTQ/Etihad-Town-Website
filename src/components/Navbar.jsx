@@ -113,7 +113,10 @@ export default function Navbar() {
 
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className={`lg:hidden p-2 rounded-lg transition-colors ${solid ? 'text-ink/80 hover:text-ink' : 'text-white/80 hover:text-white'}`}
+                className={`lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl border transition-colors ${solid
+                  ? 'border-brand-green bg-brand-green text-white shadow-soft'
+                  : 'border-white/30 bg-brand-green text-white shadow-soft-lg'
+                  }`}
                 aria-label="Toggle menu"
               >
                 {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -147,12 +150,6 @@ export default function Navbar() {
                   {link.label}
                 </motion.button>
               ))}
-              <div className="pt-2">
-                <a href={`tel:${PRIMARY_PHONE.tel}`} className="btn-green w-full justify-center">
-                  <Phone size={15} />
-                  Book Your Plot Now
-                </a>
-              </div>
             </div>
           </motion.div>
         )}
