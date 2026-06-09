@@ -105,7 +105,7 @@ export default function Navbar() {
                 href={`tel:${PRIMARY_PHONE.tel}`}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="hidden md:flex btn-green btn-sm"
+                className="hidden lg:flex btn-green btn-sm"
               >
                 <Phone size={15} />
                 Book Your Plot
@@ -150,6 +150,12 @@ export default function Navbar() {
                   {link.label}
                 </motion.button>
               ))}
+              <div className="pt-2">
+                <a href={`tel:${PRIMARY_PHONE.tel}`} className="btn-green w-full justify-center">
+                  <Phone size={15} />
+                  Book Your Plot Now
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
