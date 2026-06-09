@@ -105,7 +105,7 @@ export default function Navbar() {
                 href={`tel:${PRIMARY_PHONE.tel}`}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="hidden lg:flex btn-green btn-sm"
+                className="btn-green btn-sm !hidden lg:!inline-flex"
               >
                 <Phone size={15} />
                 Book Your Plot
